@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>가맹점 조회</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+<h1>가맹점 조회</h1>
+
+<select id="citySelect" onchange="getData()" >
+    <option value="">전체</option>
+    <option value="동구">동구</option>
+    <option value="서구">서구</option>
+    <option value="남구">남구</option>
+    <option value="북구">북구</option>
+    <option value="달서구">달서구</option>
+    <option value="수성구">수성구</option>
+    <option value="달성군">달성군</option>
+    <!-- 시군구 옵션들을 추가 -->
+</select>
+
+
+<label for="perPage">조회 할 수 </label>
+<input type="text" name ="perPage" id="perPage">
+<label for="page">페이지</label><input type="text" name ="page" id="page">
+
+<table>
+    <thead>
+    <tr>
+        <th>가맹점명</th>
+        <th>시군구</th>
+    </tr>
+    </thead>
+    <tbody id="tableBody">
+    <!-- 데이터를 동적으로 추가할 부분 -->
+    </tbody>
+</table>
+
+<script>
+
+
+
+
+
+function getData() {
+    var selectedCity = document.getElementById("citySelect").value;
+    var perPage = document.getElementById("perPage").value;
+    var page = document.getElementById("page").value;
+    var url = "/api?location=" + selectedCity + "&perPage=" +
+        perPage+ "&page=" + page
+    console.log(url)
+    console.log("실행")
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = '';
+
+            data.forEach(item => {
+                const row = document.createElement('tr');
+
+                const nameCell = document.createElement('td');
+                nameCell.textContent = item.name;
+                row.appendChild(nameCell);
+
+                const locationCell = document.createElement('td');
+                locationCell.textContent = item.location;
+                row.appendChild(locationCell);
+
+
+
+                tableBody.appendChild(row);
+            });
+        })
+        .catch(error => console.error(error));
+}
+
+</script>
+</body>
+</html>

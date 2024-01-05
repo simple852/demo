@@ -3,6 +3,24 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.repository.DataMapper">
-    <!-- SQL 쿼리 작성 -->
+<mapper namespace="com.example.demo.mapper.DataMapper">
+
+    <insert id="dataSave" parameterType="com.example.demo.dto.SearchDto" >
+        INSERT INTO `example`.`data_tbl`
+        (`name`,`location`,`business`)
+        VALUES
+        (#{name},#{location},#{business})
+    </insert>
+    
+    <select id="searchData" parameterType="String" resultType="com.example.demo.dto.response.ResponseDto">
+        select * from`example`.`data_tbl` where business = #{name}
+    </select>
+    <update id="dataUpdate" parameterType="com.example.demo.dto.response.ResponseDto">
+        UPDATE `example`.`data_tbl`
+        SET
+       count = count +1
+
+        WHERE `business` = #{business};
+
+    </update>
 </mapper>
