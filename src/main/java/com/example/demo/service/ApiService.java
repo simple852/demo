@@ -59,7 +59,7 @@ public class ApiService {
                      .business(String.valueOf(data.get("사업자번호")))
                      .location(result)
                      .name(String.valueOf(data.get("가맹점명")))
-                     .count(0)
+                     .count(1)
                      .build();
              if(searchData(responseDto.getBusiness()) == null){
               dataMapper.dataSave(responseDto);
